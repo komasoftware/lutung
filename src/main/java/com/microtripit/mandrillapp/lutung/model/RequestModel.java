@@ -4,10 +4,8 @@
 package com.microtripit.mandrillapp.lutung.model;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.Map;
 
-import org.apache.http.client.methods.HttpRequestBase;
+import com.google.appengine.api.urlfetch.HTTPRequest;
 
 /**
  * 
@@ -28,7 +26,7 @@ public interface RequestModel<V> {
 	 * @throws IOException
 	 * @since Mar 22, 2013
 	 */
-	public HttpRequestBase getRequest() throws IOException;
+	public HTTPRequest getRequest() throws IOException;
 	
 	/**
 	 * <p>Checks weather the response-status is as-expected 
@@ -46,6 +44,6 @@ public interface RequestModel<V> {
 	 * @return
 	 * @throws HandleResponseException
 	 */
-	public V handleResponse(InputStream is) throws HandleResponseException;
+	public V handleResponse(String raw) throws HandleResponseException;
 	
 }
