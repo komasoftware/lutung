@@ -106,9 +106,7 @@ Dependencies
 ------------
 If you're not using Maven, here's a list of dependencies. Just make sure these jar files are on your classpath:
 * [google-gson](https://code.google.com/p/google-gson/)
-* [Apache Http Components](http://hc.apache.org/index.html)
-* [Apache Commons IO](http://commons.apache.org/proper/commons-io/)
-* [Apache Commons Logging](http://commons.apache.org/proper/commons-logging/)
+* [google-appengine](https://cloud.google.com/appengine/docs)
 
 Known Issues
 ------------
