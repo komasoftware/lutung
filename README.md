@@ -1,5 +1,5 @@
 
-Lutung - Java Mandrill API || ADAPTED TO WORK ON GOOGLE APPENGINE
+Lutung - Java Mandrill API for GOOGLE APPENGINE
 ======
 
 Lutung - a Java interface to the [Mandrill](http://www.mandrill.com/) API. 
