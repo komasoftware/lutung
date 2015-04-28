@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>com.mandrillapp.wrapper.lutung</groupId>
+  <artifactId>lutung</artifactId>
+  <versioning>
+    <versions>
+      <version>0.0.6-SNAPSHOT</version>
+    </versions>
+    <lastUpdated>20150428103442</lastUpdated>
+  </versioning>
+</metadata>
