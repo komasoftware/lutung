@@ -8,11 +8,11 @@
 	<version>0.0.6-SNAPSHOT</version>
 	<name>lutung</name>
 	<description>Mandrill API Client for Java</description>
-	<url>https://github.com/rschreijer/lutung</url>
+	<url>https://github.com/komasoftware/lutung.git</url>
 	<inceptionYear>2013</inceptionYear>
 	<organization>
-		<name>Microtrip.it</name>
-		<url>http://www.microtrip.it</url>
+		<name>KOMA</name>
+		<url>http://www.koma.be</url>
 	</organization>
 	<packaging>jar</packaging>
 	<licenses>
@@ -34,15 +34,12 @@
 			<email>koen@koma.be</email>
 		</developer>
 	</developers>
-	<parent>
-		<groupId>org.sonatype.oss</groupId>
-		<artifactId>oss-parent</artifactId>
-		<version>7</version>
-	</parent>
-
+	<!-- <parent> <groupId>org.sonatype.oss</groupId> <artifactId>oss-parent</artifactId> 
+		<version>7</version> </parent> -->
 	<properties>
 		<java-version>1.6</java-version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<github.global.server>github</github.global.server>
 	</properties>
 
 	<!-- Scm release info -->
@@ -97,11 +94,38 @@
 					<dependency>
 						<groupId>net.kindleit</groupId>
 						<artifactId>gae-runtime</artifactId>
-						<version>1.9.17</version>
+						<version>1.9.19</version>
 						<type>pom</type>
 					</dependency>
 				</dependencies>
 			</plugin>
+			<plugin>
+				<groupId>com.github.github</groupId>
+				<artifactId>site-maven-plugin</artifactId>
+				<version>0.11</version>
+				<configuration>
+					<message>Maven artifacts for ${project.version}</message>  <!-- git commit message -->
+					<noJekyll>true</noJekyll>                                  <!-- disable webpage processing -->
+					<outputDirectory>${project.build.directory}/mvn-repo</outputDirectory> <!-- matches distribution management repository url above -->
+					<branch>refs/heads/mvn-repo</branch>                       <!-- remote branch name -->
+					<includes>
+						<include>**/*</include>
+					</includes>
+					<repositoryName>lutung</repositoryName>      <!-- github repo name -->
+					<repositoryOwner>komasoftware</repositoryOwner>    <!-- github username -->
+				</configuration>
+				<executions>
+					<!-- run site-maven-plugin's 'site' target as part of the build's normal 
+						'deploy' phase -->
+					<execution>
+						<goals>
+							<goal>site</goal>
+						</goals>
+						<phase>deploy</phase>
+					</execution>
+				</executions>
+			</plugin>
+
 		</plugins>
 	</build>
 
@@ -117,29 +141,11 @@
 			<build>
 				<plugins>
 					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-release-plugin</artifactId>
-						<version>2.4.1</version>
+						<artifactId>maven-deploy-plugin</artifactId>
+						<version>2.8.1</version>
 						<configuration>
-							<arguments>-Dgpg.passphrase=${gpg.passphrase}</arguments>
+							<altDeploymentRepository>internal.repo::default::file://${project.build.directory}/mvn-repo</altDeploymentRepository>
 						</configuration>
-					</plugin>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-gpg-plugin</artifactId>
-						<version>1.4</version>
-						<configuration>
-							<passphrase>${gpg.passphrase}</passphrase>
-						</configuration>
-						<executions>
-							<execution>
-								<id>sign-artifacts</id>
-								<phase>verify</phase>
-								<goals>
-									<goal>sign</goal>
-								</goals>
-							</execution>
-						</executions>
 					</plugin>
 				</plugins>
 			</build>
@@ -147,16 +153,10 @@
 	</profiles>
 
 	<distributionManagement>
-		<!-- Sonatype repo info -->
-		<snapshotRepository>
-			<id>sonatype-nexus-snapshots</id>
-			<name>Sonatype Nexus snapshot repository</name>
-			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
-		</snapshotRepository>
 		<repository>
-			<id>sonatype-nexus-staging</id>
-			<name>Sonatype Nexus release repository</name>
-			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+			<id>internal.repo</id>
+			<name>Temporary Staging Repository</name>
+			<url>file://${project.build.directory}/mvn-repo</url>
 		</repository>
 	</distributionManagement>
 
